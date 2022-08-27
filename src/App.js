@@ -7,8 +7,7 @@ import { useCart } from "./routes/useCart.js";
 export function App() {
   // Cart is a component.
   // dispatch adds an item to the cart and update the Cart component.
-  const [Cart, dispatchToCart] = useCart();
-
+  const [cart, dispatchToCart] = useCart();
   return (
     <BrowserRouter>
       <NavBar />
@@ -19,7 +18,7 @@ export function App() {
             path="products"
             element={<ProductPage dispatchToCart={dispatchToCart} />}
           />
-          <Route path="cart" element={<Cart cartInventory={{ 1: 1 }} />} />
+          <Route path="cart" element={cart} />
           <Route
             path="*"
             element={
