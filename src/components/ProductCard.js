@@ -1,4 +1,11 @@
-export function ProductCard({ description, image, price, title }) {
+export function ProductCard({
+  id,
+  description,
+  image,
+  price,
+  title,
+  dispatchToCart,
+}) {
   return (
     <div className="card h-100">
       <div className="d-flex justify-content-center my-5">
@@ -16,7 +23,11 @@ export function ProductCard({ description, image, price, title }) {
             Price: <strong>${price}</strong>
           </p>
 
-          <button type="button" className="btn btn-primary w-100">
+          <button
+            onClick={() => dispatchToCart({ id, type: "increment" })}
+            type="button"
+            className="btn btn-primary w-100"
+          >
             Add to cart
           </button>
         </div>

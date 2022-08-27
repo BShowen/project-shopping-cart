@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ProductCard } from "./ProductCard";
 import { getProducts } from "../utils/fakeStoreAPIWrapper";
 
-export function Products({ category }) {
+export function Products({ category, dispatchToCart }) {
   const [inventory, setInventory] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function Products({ category }) {
           className="col col-12 col-sm-6 col-md-6 col-lg-5 col-xl-4 col-xxl-4 align-items-stretch mt-4"
           key={item.id}
         >
-          <ProductCard {...item} />
+          <ProductCard {...item} dispatchToCart={dispatchToCart} />
         </div>
       );
     });
