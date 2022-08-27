@@ -5,7 +5,6 @@ export function ProductPage() {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category") || "";
 
-  console.log({ category });
   return (
     <>
       <h2>Products</h2>
