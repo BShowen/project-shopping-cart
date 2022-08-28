@@ -41,7 +41,8 @@ export function useCart() {
 
   // The component returned from this function.
   const component = (
-    <div className="">
+    <div className="container p-0 text-center">
+      <h1>Shopping cart</h1>
       {products.map((product) => {
         return (
           <CartItemCard
@@ -52,6 +53,24 @@ export function useCart() {
           />
         );
       })}
+
+      <h2>
+        Total: $
+        {products
+          .reduce((total, product) => {
+            return total + product.price * cartInventory[product.id];
+          }, 0)
+          .toFixed(2)}
+      </h2>
+
+      <div className="d-flex flex-column p-4">
+        <button className="btn btn-primary my-1" onClick={() => {}}>
+          Checkout
+        </button>
+        <button className="btn btn-primary my-1" onClick={() => {}}>
+          Close
+        </button>
+      </div>
     </div>
   );
 
