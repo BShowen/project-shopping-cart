@@ -42,21 +42,25 @@ export function useCart() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const className = `container m-0 text-center ${isOpen ? "open" : ""}`;
+  const className = `container m-0 py-5 d-flex flex-column align-items-center ${
+    isOpen ? "open" : ""
+  }`;
   // The component returned from this function.
   const component = (
     <div className={className} id="cart-container">
       <h1>Shopping cart</h1>
-      {products.map((product) => {
-        return (
-          <CartItemCard
-            key={product.id}
-            {...product}
-            dispatchToCart={dispatchToCart}
-            quantity={cartInventory[product.id] || 0}
-          />
-        );
-      })}
+      <div className="mb-auto w-100">
+        {products.map((product) => {
+          return (
+            <CartItemCard
+              key={product.id}
+              {...product}
+              dispatchToCart={dispatchToCart}
+              quantity={cartInventory[product.id] || 0}
+            />
+          );
+        })}
+      </div>
 
       <h2>
         Total: $
@@ -67,7 +71,7 @@ export function useCart() {
           .toFixed(2)}
       </h2>
 
-      <div className="d-flex flex-column p-2">
+      <div className="d-flex flex-column p-2 w-100">
         <button className="btn btn-primary my-1" onClick={() => {}}>
           Checkout
         </button>
