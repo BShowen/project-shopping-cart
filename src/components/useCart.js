@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { CartItemCard } from "../components/CartItemCard";
+import { CartItemCard } from "./CartItemCard";
 import { getProductsById } from "../utils/fakeStoreAPIWrapper";
 import { isEqual } from "lodash";
+import "./useCart.css";
 
 /*
   This is a hook that returns a component and and updater function. 
@@ -39,9 +40,12 @@ export function useCart() {
     });
   }, [cartInventory]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const className = `container m-0 text-center ${isOpen ? "open" : ""}`;
   // The component returned from this function.
   const component = (
-    <div className="container p-0 text-center">
+    <div className={className} id="cart-container">
       <h1>Shopping cart</h1>
       {products.map((product) => {
         return (
@@ -63,11 +67,11 @@ export function useCart() {
           .toFixed(2)}
       </h2>
 
-      <div className="d-flex flex-column p-4">
+      <div className="d-flex flex-column p-2">
         <button className="btn btn-primary my-1" onClick={() => {}}>
           Checkout
         </button>
-        <button className="btn btn-primary my-1" onClick={() => {}}>
+        <button className="btn btn-primary my-1" onClick={toggleCart}>
           Close
         </button>
       </div>
@@ -94,5 +98,10 @@ export function useCart() {
     setCartInventory(newCartInventory);
   }
 
-  return [component, dispatchToCart];
+  function toggleCart() {
+    document.body.style = `${isOpen ? "" : "overflow: hidden"}`;
+    setIsOpen(!isOpen);
+  }
+
+  return [component, dispatchToCart, toggleCart];
 }

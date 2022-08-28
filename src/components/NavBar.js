@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export function NavBar() {
+export function NavBar({ toggleCart }) {
   return (
     <nav className="navbar navbar-expand-sm bg-light">
       <div className="container-fluid">
@@ -79,7 +79,7 @@ export function NavBar() {
               </div>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/cart">
+              <NavLink className="nav-link" to="#" onClick={toggleCart}>
                 Cart
               </NavLink>
             </li>
