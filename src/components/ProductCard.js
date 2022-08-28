@@ -7,7 +7,7 @@ export function ProductCard({
   dispatchToCart,
 }) {
   return (
-    <div className="card h-100">
+    <div className="card h-100 overflow-hidden">
       <div className="d-flex justify-content-center my-5">
         <img
           src={image}
