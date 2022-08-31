@@ -13,7 +13,7 @@ export function CartItemCard({
   productImage.style = { border: "1px solid red" };
 
   return (
-    <div className="row justify-content-center my-1 p-1">
+    <div className="row justify-content-center my-1 p-1 bg-light mx-2">
       <div className="col-4 d-flex">
         <img
           src={productImage.src}
