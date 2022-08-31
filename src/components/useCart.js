@@ -82,6 +82,16 @@ export function useCart() {
     </div>
   );
 
+  // If and item has been REMOVED from the cart
+  // edit products and remove any products that are in their that are NOT in
+  // newState.
+  // map through the products array and for each product, if it's id is also inside of newState then keep that item, otherwise discard that item.
+  // Set products to this mapped array.
+  // const newProducts = products.map((item) => {
+  // HERE
+  // });
+  // Else
+
   // The function that updates the cart.
   function dispatchToCart({ id, type }) {
     const newCartInventory = { ...cartInventory };
@@ -90,10 +100,23 @@ export function useCart() {
     switch (type) {
       case "increment":
         newCartInventory[id] = ++newCartInventory[id] || 1;
+        setCartInventory(newCartInventory);
         break;
       case "decrement":
         newCartInventory[id] = --newCartInventory[id] || 0;
         if (newCartInventory[id] === 0) delete newCartInventory[id];
+
+        // Synchronously update the cart. There was a bug where an item was
+        // removed from the cart and the cart wouldn't update until after it
+        // received a response from the API - which is a long time and made the
+        // UI feel slow. So now, whenever a use removes an item from the cart,
+        // the state will be updated without an API call and this fixes that
+        // issue.
+        const updatedProducts = products.filter((product) =>
+          Object.keys(newCartInventory).includes(product.id.toString())
+        );
+        prevCart.current = newCartInventory;
+        setProducts(updatedProducts);
         break;
       case "remove":
         delete newCartInventory[id];
