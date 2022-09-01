@@ -13,9 +13,10 @@ export function NavBar({ toggleCart }) {
         <NavLink className="mx-1 p-2 nav-link" to="/products">
           Products
         </NavLink>
-        <NavLink className="mx-1 p-2 nav-link" to="#" onClick={toggleCart}>
+        {/* This is NOT a NavLink. I don't want an empty href value */}
+        <div id="cart-icon" className="mx-1 p-2 nav-link" onClick={toggleCart}>
           Cart
-        </NavLink>
+        </div>
       </div>
     </nav>
   );

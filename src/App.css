@@ -22,3 +22,7 @@ it can be used in #content-container calc() */
 .navbar {
   height: var(--nav-height);
 }
+
+#cart-icon:hover {
+  cursor: pointer;
+}
