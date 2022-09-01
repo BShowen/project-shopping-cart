@@ -40,57 +40,67 @@ export function useCart() {
     });
   }, [cartInventory]);
 
+  useEffect(() => {
+    const clickHandler = (e) => {
+      const targetId = e.target.id;
+      if (targetId === "cart-container" || targetId === "cart-overlay") {
+        setIsOpen(false);
+        document.body.style = "";
+      }
+    };
+    document.addEventListener("click", clickHandler);
+
+    return () => {
+      document.removeEventListener("click", clickHandler);
+    };
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
 
-  const className = `container m-0 py-5 d-flex flex-column align-items-center ${
-    isOpen ? "open" : ""
-  }`;
   // The component returned from this function.
   const component = (
-    <div className={className} id="cart-container">
-      <h1>Shopping cart</h1>
-      <div className="mb-auto w-100">
-        {products.map((product) => {
-          return (
-            <CartItemCard
-              key={product.id}
-              {...product}
-              dispatchToCart={dispatchToCart}
-              quantity={cartInventory[product.id] || 0}
-            />
-          );
-        })}
-      </div>
+    <>
+      <div
+        className={`container m-0 py-5 d-flex flex-column align-items-center ${
+          isOpen ? "open" : ""
+        }`}
+        id="cart-container"
+      >
+        <h1>Shopping cart</h1>
+        <div className="mb-auto w-100">
+          {products.map((product) => {
+            return (
+              <CartItemCard
+                key={product.id}
+                {...product}
+                dispatchToCart={dispatchToCart}
+                quantity={cartInventory[product.id] || 0}
+              />
+            );
+          })}
+        </div>
 
-      <h2>
-        Total: $
-        {products
-          .reduce((total, product) => {
-            return total + product.price * cartInventory[product.id];
-          }, 0)
-          .toFixed(2)}
-      </h2>
+        <h2>
+          Total: $
+          {products
+            .reduce((total, product) => {
+              return total + product.price * cartInventory[product.id];
+            }, 0)
+            .toFixed(2)}
+        </h2>
 
-      <div className="d-flex flex-column p-2 w-100">
-        <button className="btn btn-primary my-1" onClick={() => {}}>
-          Checkout
-        </button>
-        <button className="btn btn-primary my-1" onClick={toggleCart}>
-          Close
-        </button>
+        <div className="d-flex flex-column p-2 w-100">
+          <button className="btn btn-primary my-1" onClick={() => {}}>
+            Checkout
+          </button>
+          <button className="btn btn-primary my-1" onClick={toggleCart}>
+            Close
+          </button>
+        </div>
       </div>
-    </div>
+      <div id="cart-overlay" className={`${isOpen ? "open" : ""}`}></div>
+    </>
   );
-
-  // If and item has been REMOVED from the cart
-  // edit products and remove any products that are in their that are NOT in
-  // newState.
-  // map through the products array and for each product, if it's id is also inside of newState then keep that item, otherwise discard that item.
-  // Set products to this mapped array.
-  // const newProducts = products.map((item) => {
-  // HERE
-  // });
-  // Else
 
   // The function that updates the cart.
   function dispatchToCart({ id, type }) {
