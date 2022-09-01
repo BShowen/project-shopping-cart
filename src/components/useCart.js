@@ -140,5 +140,13 @@ export function useCart() {
     setIsOpen(!isOpen);
   }
 
-  return [component, dispatchToCart, toggleCart];
+  function count() {
+    const current = Object.values(cartInventory).reduce(
+      (prev, current) => prev + current,
+      0
+    );
+    return { current };
+  }
+
+  return [component, dispatchToCart, toggleCart, count];
 }

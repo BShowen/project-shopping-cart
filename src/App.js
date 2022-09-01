@@ -9,11 +9,12 @@ import "./App.css";
 export function App() {
   // Cart is a component.
   // dispatch adds an item to the cart and update the Cart component.
-  const [cart, dispatchToCart, toggleCart] = useCart();
+  const [cart, dispatchToCart, toggleCart, count] = useCart();
+
   return (
     <BrowserRouter>
       {cart}
-      <NavBar toggleCart={toggleCart} />
+      <NavBar toggleCart={toggleCart} cartCount={count().current} />
       <div
         id="content-container"
         className="container-xl p-0 pb-5 p-xl-auto m-0 m-xl-auto overflow-hidden"
