@@ -12,7 +12,7 @@ export function App() {
     <BrowserRouter>
       {cart}
       <NavBar toggleCart={toggleCart} />
-      <div className="container overflow-hidden">
+      <div className="container-xl p-0 p-xl-auto m-0 m-xl-auto overflow-hidden">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
