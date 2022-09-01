@@ -15,6 +15,6 @@
   ],
   "start_url": "http://192.168.1.4:3000/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#0099FF",
+  "background_color": "#FFFFFF"
 }

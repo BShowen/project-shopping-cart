@@ -3,9 +3,9 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export function NavBar({ toggleCart, cartCount }) {
   return (
-    <nav className="navbar sticky-top bg-light">
+    <nav className="navbar sticky-top bg-dark text-light">
       <div className="container">
-        <NavLink className="navbar-brand me-auto" to="/">
+        <NavLink className="navbar-brand me-auto text-light" to="/">
           Fake Store
         </NavLink>
         <NavLink className="mx-1 p-2 nav-link" to="/">

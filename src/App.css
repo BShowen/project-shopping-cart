@@ -1,26 +1,36 @@
 :root {
   --footer-height: 10rem;
-  --nav-height: 50px;
+  --nav-height: calc( 70px + env(safe-area-inset-top));
 }
 
+body {
+  background-color: #212529;
+}
+
+.navbar{
+  padding-top: env(safe-area-inset-top)
+}
 
 /* content container gets a min height so when there isn't any content on the 
 screen the footer is still at the bottom. And then when there is content on the 
 screen the footer gets pushed down */
 #content-container {
-  min-height: calc(100vh - (var(--footer-height) + var(--nav-height) ));
+  background-color: #ffffff;
+  min-height: calc(
+    100vh - (var(--nav-height) + var(--footer-height) + 1rem)
+  );
 }
 
 /* Footer needs and explicit height so
 it can be used in #content-container calc()  */
 footer{
-  min-height: var(--footer-height);
+  max-height: var(--footer-height);
 }
 
 /* Navbar needs an explicit height so 
 it can be used in #content-container calc() */
 .navbar {
-  height: var(--nav-height);
+  max-height: var(--nav-height);
 }
 
 #cart-icon:hover {
