@@ -13,30 +13,32 @@ export function App() {
 
   return (
     <BrowserRouter>
-      {cart}
-      <NavBar toggleCart={toggleCart} cartCount={count().current} />
-      <div
-        id="content-container"
-        className="container-xl p-0 pb-5 p-xl-auto m-0 m-xl-auto overflow-hidden"
-      >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="products"
-            element={<ProductPage dispatchToCart={dispatchToCart} />}
-          />
-          {/* <Route path="cart" element={cart} /> */}
-          <Route
-            path="*"
-            element={
-              <div className="container text-center pt-5">
-                <h3>That url does not exist.</h3>
-              </div>
-            }
-          />
-        </Routes>
+      <div id="page-container" className="d-flex flex-column overflow-scroll">
+        {cart}
+        <NavBar toggleCart={toggleCart} cartCount={count().current} />
+        <div
+          id="content-container"
+          className="container-xl flex-grow-1 p-0 pb-5"
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="products"
+              element={<ProductPage dispatchToCart={dispatchToCart} />}
+            />
+            {/* <Route path="cart" element={cart} /> */}
+            <Route
+              path="*"
+              element={
+                <div className="container text-center pt-5">
+                  <h3>That url does not exist.</h3>
+                </div>
+              }
+            />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </BrowserRouter>
   );
 }
