@@ -19,11 +19,16 @@ export async function getProducts(filter = { category: "" }) {
       sanitizedFilter = `/category/${dirtyFilter}`;
   }
 
-  const response = await fetch(
-    `https://fakestoreapi.com/products${sanitizedFilter}`
-  );
-
-  return response.json();
+  try {
+    const response = await fetch(
+      `https://fakestoreapi.com/products${sanitizedFilter}`
+    );
+    return response.json();
+  } catch (err) {
+    throw new Error(
+      "Something went wrong. Please check your internet connection."
+    );
+  }
 }
 
 // products is an object where the key and value are integers.
