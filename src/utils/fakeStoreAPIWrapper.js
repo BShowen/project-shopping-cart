@@ -37,7 +37,6 @@ export async function getProductsById(products) {
   const results = await Promise.all(
     Object.keys(products).map((productId) => _getProduct(productId))
   );
-
   return results;
 }
 

@@ -34,7 +34,6 @@ export function useCart() {
     // updated the quantity of items. We stop execution of this function here.
     if (isEqual(prevState, newState)) return;
     prevCart.current = cartInventory;
-
     getProductsById(cartInventory || {}).then((results) => {
       setProducts(results);
     });
@@ -110,7 +109,7 @@ export function useCart() {
     switch (type) {
       case "increment":
         newCartInventory[id] = ++newCartInventory[id] || 1;
-        setCartInventory(newCartInventory);
+        // setCartInventory(newCartInventory);
         break;
       case "decrement":
         newCartInventory[id] = --newCartInventory[id] || 0;
