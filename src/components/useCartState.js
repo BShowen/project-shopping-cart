@@ -1,13 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { CartItemCard } from "./CartItemCard";
 import { getProductsById } from "../utils/fakeStoreAPIWrapper";
 import { isEqual } from "lodash";
-import "./useCart.css";
 
 /*
   This is a hook that returns a component and and updater function. 
  */
-export function useCart() {
+export function useCartState() {
   // cartInventory is an object where the key is the productIt and the value is
   // the product quantity.
   // Example: { 1: 1, 3: 2 }
@@ -34,9 +32,16 @@ export function useCart() {
     // updated the quantity of items. We stop execution of this function here.
     if (isEqual(prevState, newState)) return;
     prevCart.current = cartInventory;
-    getProductsById(cartInventory || {}).then((results) => {
-      setProducts(results);
-    });
+
+    const asyncCallGetProductsById = async () => {
+      await getProductsById(cartInventory || {}).then((results) => {
+        setProducts(results);
+      });
+    };
+
+    asyncCallGetProductsById().catch((error) =>
+      console.log("There has been an error", error.message)
+    );
   }, [cartInventory]);
 
   useEffect(() => {
@@ -55,51 +60,6 @@ export function useCart() {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
-
-  // The component returned from this function.
-  const component = (
-    <>
-      <div
-        className={`container m-0 py-5 d-flex flex-column align-items-center ${
-          isOpen ? "open" : ""
-        }`}
-        id="cart-container"
-      >
-        <h1>Shopping cart</h1>
-        <div className="mb-auto w-100">
-          {products.map((product) => {
-            return (
-              <CartItemCard
-                key={product.id}
-                {...product}
-                dispatchToCart={dispatchToCart}
-                quantity={cartInventory[product.id] || 0}
-              />
-            );
-          })}
-        </div>
-
-        <h2>
-          Total: $
-          {products
-            .reduce((total, product) => {
-              return total + product.price * cartInventory[product.id];
-            }, 0)
-            .toFixed(2)}
-        </h2>
-
-        <div className="d-flex flex-column p-2 w-100">
-          <button className="btn btn-primary my-1" onClick={() => {}}>
-            Checkout
-          </button>
-          <button className="btn btn-primary my-1" onClick={toggleCart}>
-            Close
-          </button>
-        </div>
-      </div>
-      <div id="cart-overlay" className={`${isOpen ? "open" : ""}`}></div>
-    </>
-  );
 
   // The function that updates the cart.
   function dispatchToCart({ id, type }) {
@@ -147,5 +107,5 @@ export function useCart() {
     return { current };
   }
 
-  return [component, dispatchToCart, toggleCart, count];
+  return { dispatchToCart, toggleCart, count, isOpen, products, cartInventory };
 }

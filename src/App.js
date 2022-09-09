@@ -1,20 +1,27 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./routes/Home";
 import { NavBar } from "./components/NavBar";
 import { ProductPage } from "./routes/ProductPage";
-import { useCart } from "./components/useCart";
+import { Cart } from "./components/Cart";
+import { useCartState } from "./components/useCartState";
 import { Footer } from "./components/Footer.js";
 import "./App.css";
 export function App() {
-  // Cart is a component.
-  // dispatch adds an item to the cart and update the Cart component.
-  const [cart, dispatchToCart, toggleCart, count] = useCart();
+  // A hook for handling the cart logic.
+  // The cart display is delegated to the Cart component.
+  const { dispatchToCart, toggleCart, count, isOpen, products, cartInventory } =
+    useCartState();
 
   return (
     <BrowserRouter>
       <div id="page-container" className="d-flex flex-column overflow-scroll">
-        {cart}
+        <Cart
+          isOpen={isOpen}
+          products={products}
+          dispatchToCart={dispatchToCart}
+          cartInventory={cartInventory}
+          toggleCart={toggleCart}
+        />
         <NavBar toggleCart={toggleCart} cartCount={count().current} />
         <div
           id="content-container"
