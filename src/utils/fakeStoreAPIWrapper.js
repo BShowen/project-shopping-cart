@@ -35,27 +35,16 @@ export async function getProducts(filter = { category: "" }) {
 // products is an object where the key and value are integers.
 // the key is the product id and the value is the product count.
 export async function getProductsById(products) {
-  try {
-    const results = await Promise.all(
-      Object.keys(products).map(
-        async (productId) => await _getProduct(productId)
-      )
-    );
-    return results;
-  } catch (error) {
-    throw error;
-  }
+  const results = await Promise.all(
+    Object.keys(products).map(async (productId) => await _getProduct(productId))
+  );
+  return results;
 }
 
 async function _getProduct(productId) {
-  try {
-    const response = await fetch(
-      `https://fakestoreapi.com/products/${productId}`
-    );
-    const json = await response.json();
-    return json;
-    // return response.json();
-  } catch (error) {
-    throw new Error(ERROR_MESSAGE);
-  }
+  const response = await fetch(
+    `https://fakestoreapi.com/products/${productId}`
+  );
+  const json = await response.json();
+  return json;
 }
