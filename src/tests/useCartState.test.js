@@ -2,7 +2,7 @@ import { renderHook, act, waitFor } from "@testing-library/react";
 import { useCartState } from "../components/useCartState";
 
 describe("The cart component", () => {
-  it.skip("has no items in the cart when initially rendered", () => {
+  it("has no items in the cart when initially rendered", () => {
     const { result } = renderHook(() => useCartState());
 
     expect(result.current.count().current).toBe(0);
@@ -22,5 +22,13 @@ describe("The cart component", () => {
     });
 
     await waitFor(() => expect(result.current.products.length).toBe(2));
+  });
+
+  it("should have an error", async () => {
+    const { result } = renderHook(() => useCartState());
+
+    await act(async () => {
+      result.current.dispatchToCart({ id: 0, type: "increment" });
+    });
   });
 });

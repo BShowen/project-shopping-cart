@@ -34,14 +34,14 @@ export function useCartState() {
     prevCart.current = cartInventory;
 
     const asyncCallGetProductsById = async () => {
-      await getProductsById(cartInventory || {}).then((results) => {
-        setProducts(results);
-      });
+      await getProductsById(cartInventory || {})
+        .then((results) => {
+          setProducts(results);
+        })
+        .catch((error) => console.log(error.message));
     };
 
-    asyncCallGetProductsById().catch((error) =>
-      console.log("There has been an error", error.message)
-    );
+    asyncCallGetProductsById();
   }, [cartInventory]);
 
   useEffect(() => {
@@ -107,5 +107,12 @@ export function useCartState() {
     return { current };
   }
 
-  return { dispatchToCart, toggleCart, count, isOpen, products, cartInventory };
+  return {
+    dispatchToCart,
+    toggleCart,
+    count,
+    isOpen,
+    products,
+    cartInventory,
+  };
 }
