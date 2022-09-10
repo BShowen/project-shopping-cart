@@ -1,27 +1,26 @@
-import {
-  render,
-  renderHook,
-  act,
-  waitFor,
-  fireEvent,
-} from "@testing-library/react";
-import { screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import { useCart } from "../components/useCart";
-import { ProductPage } from "../routes/ProductPage";
-import { NavBar } from "../components/NavBar";
+import { renderHook, act, waitFor } from "@testing-library/react";
+import { useCartState } from "../components/useCartState";
 
 describe("The cart component", () => {
-  it("has a zero dollar total on initial render", () => {
-    const { result } = renderHook(() => {
-      // const [cart] = useCart();
-      // return [cart];
-      return useCart();
+  it.skip("has no items in the cart when initially rendered", () => {
+    const { result } = renderHook(() => useCartState());
+
+    expect(result.current.count().current).toBe(0);
+  });
+
+  it("can have items added to the cart", async () => {
+    const { result } = renderHook(() => useCartState());
+
+    await act(async () => {
+      await result.current.dispatchToCart({ id: 2, type: "increment" });
     });
-    const [cart] = result.current;
-    render(cart);
-    expect(screen.getByRole("heading", { name: /Total/i }).textContent).toEqual(
-      "Total: $0.00"
-    );
+
+    await waitFor(() => expect(result.current.products.length).toBe(1));
+
+    await act(async () => {
+      await result.current.dispatchToCart({ id: 1, type: "increment" });
+    });
+
+    await waitFor(() => expect(result.current.products.length).toBe(2));
   });
 });
