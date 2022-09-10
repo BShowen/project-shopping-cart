@@ -1,3 +1,6 @@
+const ERROR_MESSAGE =
+  "Something went wrong. Please check your internet connection.";
+
 export async function getProducts(filter = { category: "" }) {
   const { category: dirtyFilter } = filter;
 
@@ -25,24 +28,34 @@ export async function getProducts(filter = { category: "" }) {
     );
     return response.json();
   } catch (err) {
-    throw new Error(
-      "Something went wrong. Please check your internet connection."
-    );
+    throw new Error(ERROR_MESSAGE);
   }
 }
 
 // products is an object where the key and value are integers.
 // the key is the product id and the value is the product count.
 export async function getProductsById(products) {
-  const results = await Promise.all(
-    Object.keys(products).map((productId) => _getProduct(productId))
-  );
-  return results;
+  try {
+    const results = await Promise.all(
+      Object.keys(products).map(
+        async (productId) => await _getProduct(productId)
+      )
+    );
+    return results;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function _getProduct(productId) {
-  const response = await fetch(
-    `https://fakestoreapi.com/products/${productId}`
-  );
-  return response.json();
+  try {
+    const response = await fetch(
+      `https://fakestoreapi.com/products/${productId}`
+    );
+    const json = await response.json();
+    return json;
+    // return response.json();
+  } catch (error) {
+    throw new Error(ERROR_MESSAGE);
+  }
 }
