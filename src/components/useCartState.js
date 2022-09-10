@@ -33,15 +33,13 @@ export function useCartState() {
     if (isEqual(prevState, newState)) return;
     prevCart.current = cartInventory;
 
-    const asyncCallGetProductsById = async () => {
-      await getProductsById(cartInventory || {})
-        .then((results) => {
-          setProducts(results);
-        })
-        .catch((error) => console.log(error.message));
+    const loadProducts = async () => {
+      await getProductsById(cartInventory || {}).then((results) => {
+        setProducts(results);
+      });
     };
 
-    asyncCallGetProductsById();
+    loadProducts();
   }, [cartInventory]);
 
   useEffect(() => {
