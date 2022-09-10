@@ -26,7 +26,7 @@ describe("The product page", () => {
     await waitFor(() =>
       expect(
         screen.getAllByRole("button", { name: /add to cart/i }).length
-      ).toBe(5)
+      ).toBe(6)
     );
   });
 
