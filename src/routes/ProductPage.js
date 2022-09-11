@@ -7,7 +7,7 @@ export function ProductPage({ dispatchToCart }) {
 
   return (
     <>
-      <h2>Products</h2>
+      <h2>Store Products</h2>
       <div className="container-fluid py-1 px-1 border rounded">
         <nav>
           <div className="row m-0">
