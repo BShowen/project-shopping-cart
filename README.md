@@ -63,4 +63,4 @@ This works as you would expect. The problem that I had was that I was destructur
 22 });
 ```
 
-Anytime you use `renderHook` you should always reference result.current. 
+Anytime you use `renderHook` you should always reference result.current and never assign the result to a variable. This is just something that tripped me up for a few hours and It took a lot of searching until I found a StackOverflow post where someone mentioned that result.current is a reference that gets updated on each render. 
