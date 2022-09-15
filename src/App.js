@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import { Home } from "./routes/Home";
 import { NavBar } from "./components/NavBar";
 import { ProductPage } from "./routes/ProductPage";
@@ -13,7 +13,7 @@ export function App() {
     useCartState();
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div id="page-container" className="d-flex flex-column overflow-scroll">
         <Cart
           isOpen={isOpen}
@@ -46,6 +46,6 @@ export function App() {
         </div>
         <Footer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
