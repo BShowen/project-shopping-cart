@@ -13,7 +13,7 @@
         "type": "image/png"
     }
   ],
-  "start_url": "http://192.168.1.4:3000/",
+  "start_url": "https://bshowen.github.io/project-shopping-cart/",
   "display": "standalone",
   "theme_color": "#0099FF",
   "background_color": "#FFFFFF"
